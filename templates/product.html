@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'shop/style.css' %}">
+
+{% block content %}
+
+
+<style type="text/css">
+
+.html, body {
+    height: 100%;
+    max-height: 100%;
+    background-color: #ced1d6fc;
+    font-family: 'Open Sans', sans-serif;
+
+<!--.product-description-tabs {-->
+<!--    padding: 10px;-->
+<!--}-->
+
+<!--.product-image-item {-->
+<!--    padding: 5px;-->
+<!--    margin-bottom: 5px;-->
+<!--    background: white;-->
+<!--    text-align: center;-->
+<!--    border: 1px solid lightgray;-->
+<!--}-->
+
+</style>
+
+
+
+
+    <div class="container" style="background-color: #ced1d6fc; font-family: 'Open Sans', sans-serif;">
+        <div class="row">
+            <div class="col-lg-3">
+                {% for image_item in products.productimage_set.all %}
+                <div class="product-image-item" style="padding: 5px; margin-bottom: 5px; background: white; text-align: center;
+                                                        border: 1px solid lightgray;">
+                <img src="{{ image_item.image.url }}" class="img-responsive">
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-lg-9">
+                <h1 class="text-centre" style="text-align: center">
+                    {{ products.name }}
+                </h1>
+                <div class="">
+                    <p>
+                        Price: {{ products.price }}
+                    </p>
+                </div>
+
+
+
+
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="description-tab" data-bs-toggle="tab" href="#description" role="tab" aria-controls="home" aria-selected="true">Описание</a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="delivery-tab" data-bs-toggle="tab" href="#delivery" role="tab" aria-controls="profile" aria-selected="false">Доставка</a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                  </li>
+                </ul>
+                <div class="tab-content product-description-tabs" style="padding: 15px;" id="myTabContent">
+                  <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                      {{ products.description }}
+                  </div>
+
+                  <div class="tab-pane fade" id="delivery" role="tabpanel" aria-labelledby="delivery-tab">
+                      <h3>Как мы делаем доставку</h3>
+                  </div>
+                  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                    <div  style="margin-top: 15px">
+                        <form id="form_buying_product" class="form-inline">
+                            <div class="form-group">
+                                <input type="number" class="form-control" name="number"  id="number">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" id="submit_btn" class="btn btn-success btn-buy"
+                                    data-product_id = "{{ products.id }}"
+                                    data-name = "{{ products.name }}"
+                                    data-price = "{{ products.price }}"
+                                >
+                                    Добавить в корзину
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

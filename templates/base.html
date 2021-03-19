@@ -1,0 +1,191 @@
+{% load static %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IPhone</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'shop/style.css' %}">-->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+
+</head>
+<body>
+
+<style type="text/css">
+
+.navbar-top {
+    height: 25px;
+    background-color: #5cbb65;
+}
+
+.wrapper {
+    padding-bottom: 50px;
+}
+
+.wrapper-content {
+    overflow: auto;
+    padding-bottom: 50px;
+}
+
+.basket-container {
+    position: relative;
+    width: 450px;
+    padding: 15px 10px;
+}
+
+.basket-items {
+    position: absolute;
+    top: 52px;
+    width: 460px;
+    z-index: 10;
+    padding: 10px;
+    background-color: #66cc93;
+}
+
+.hidden {
+    display: none
+    </style>
+    <style type="text/css">;
+}
+
+.footer {
+    position: relative;
+    margin-top: -200px;
+    background-color: white;
+    height: 180px;
+    clear: both;
+}
+
+</style>
+
+<div class="wrapper">
+    <div class="wrapper-content">
+        <div>
+          <nav class="navbar-top">
+              <h7  style="margin-left: 30px;">
+                Служба поддержки: 8-020-546-54-54(круглосуточно)
+              </h7>
+          </nav>
+        </div>
+      <nav class="navbar navbar-expand-lg" style="background-color: #55e093; height: 50px; margin-top: 0px;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}">Iphone-Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Главная</a>
+                    </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Товары</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Смартфоны</a></li>
+                                <li><a class="dropdown-item" href="#">Ноутбуки</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Все товары</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+    <!--      <form class="d-flex ml-auto">-->
+    <!--        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+    <!--        <button class="btn btn-outline-success" type="submit">Search</button>-->
+    <!--      </form>-->
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <div class="basket-container">
+                                <a href="">Корзина<span id="basket_total_amount"></span>
+                                    <span id="basket_total_nmb">
+                                        {% if products_total_nmb %}
+                                            ({{ products_total_nmb }})
+                                        {% else %}
+                                            (0)
+                                        {% endif %}
+                                    </span></a>
+                                <div class="basket-items hidden">
+                                  <ul class="">
+                                      {% for product_in_basket in products_in_basket %}
+                                        <li>
+                                            {{ product_in_basket.product.name }} x {{ product_in_basket.nmb }} шт. по
+                                            {{ product_in_basket.price_per_item }} грн.
+                                            <a class="delete-items" href="" data-product_id="{{ product_in_basket.id }}">x</a>
+                                        </li>
+                                      {% endfor%}
+                                  </ul>
+                                    <br>
+                                    <div class="move_to_cart_btn text-center">
+                                        <button type="submit" id="move_submit_btn" class="btn btn-success btn-buy">
+                                            <a class="btn-success" href="{% url 'checkout' %}">
+                                                Перейти в корзину</a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+<!--                        </li>-->
+                    </ul>
+                </div>
+        </div>
+      </nav>
+
+
+       <div class="text-center">
+           {% if user.is_superuser %}
+           <h6>
+               <a href="{% url 'admin_orders' %}" target="_blank">Смотреть все заказы</a>
+           </h6>
+           {% endif %}
+       </div>
+
+        {% include "shop/errors_notification.html" %}
+
+        {% block content %}
+
+        {% endblock content %}
+
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="text m-0 text-center">
+            <h3>Footer</h3>
+            </div>
+        </div>
+     </footer>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!--    <script src="js/scripts.js?<?=time()?>"></script>-->
+
+    <script src="{% static 'js/scripts.js'%}"></script>
+
+</body>
+</html>

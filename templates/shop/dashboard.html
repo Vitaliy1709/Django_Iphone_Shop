@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style type="text/css">
+
+.highcharts-figure, .highcharts-data-table table {
+    min-width: 360px;
+    max-width: 800px;
+    margin: 1em auto;
+}
+
+.highcharts-data-table table {
+	font-family: Verdana, sans-serif;
+	border-collapse: collapse;
+	border: 1px solid #EBEBEB;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
+}
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+    padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+    padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+</style>
+
+<figure class="highcharts-figure">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-1">
+                <h3>Графики</h3>
+                <div id="container_1" class="chart-container"></div>
+                <div id="container_2" class="chart-container"></div>
+            </div>
+        </div>
+    </div>
+</figure>
+
+{% endblock content %}
+{% block js_stuff %}
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    var data = {{ charts_data|safe }}
+
+    Highcharts.chart('container_1', {
+
+        title: {
+            text: 'Статистика заказов'
+        },
+
+        subtitle: {
+            text: 'Разбивка по статусам'
+        },
+
+        yAxis: {
+            title: {
+                text: 'Сумма заказов',
+                style: {'color': '#666666'}
+            }
+        },
+
+        xAxis: {
+                categories: data.chart_orders.dates_list
+        },
+
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+    plotOptions: {
+        area: {
+            stacking: 'percent',
+            lineColor: '#ffffff',
+            lineWidth: 1,
+            marker: {
+                lineWidth: 1,
+                lineColor: '#ffffff'
+            },
+            accessibility: {
+                pointDescriptionFormatter: function (point) {
+                    function round(x) {
+                        return Math.round(x * 100) / 100;
+                    }
+                    return (point.index + 1) + ', ' + point.category + ', ' +
+                        point.y + ' millions, ' + round(point.percentage) + '%, ' +
+                        point.series.name;
+                }
+            }
+        }
+    },
+
+        series: [{ data.chart_orders.series
+        }],
+
+<!--    chart 2-->
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+
+    });
+
+
+    Highcharts.chart('container_2', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Статистика заказов'
+        },
+
+        subtitle: {
+            text: 'Разбивка по статусам'
+        },
+        xAxis: {
+            categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total fruit consumption'
+            }
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+            shared: true
+        },
+        plotOptions: {
+            column: {
+                stacking: 'percent'
+            }
+        },
+        series: [{
+            name: 'John',
+            data: [5, 3, 4, 7, 2]
+        }, {
+            name: 'Jane',
+            data: [2, 2, 3, 2, 1]
+        }, {
+            name: 'Joe',
+            data: [3, 4, 4, 2, 5]
+        }]
+    });
+})
+
+
+</script>
+{% endblock js_stuff %}
+
+

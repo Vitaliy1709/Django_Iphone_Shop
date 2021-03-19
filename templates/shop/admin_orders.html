@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!--<link rel="stylesheet" type="text/css" href="{% static 'shop/style.css' %}">-->
+
+<!--<script src="https://code.jquery.com/jquery-3.5.1.js"></script>-->
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-lg-offset-1">
+                <h4>Список заказов</h4>
+                <br>
+                <table class="display" id="orders_table" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Имя</th>
+                                <th>Телефон</th>
+                                <th>Количество товара</th>
+                                <th>Товары в заказе</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           {% for item in orders %}
+                             <tr>
+                                <td>{{ item.customer_name }}</td>
+                                <td>{{ item.customer_phone }}</td>
+                                <td>{{ item.products_nmb }}</td>
+                                <td>
+                                    <ol>
+                                        {% for product in item.products %}
+                                            <li>
+                                                {{ product.product__name }}: {{ product.nmb }} шт. по {{ product.price_per_item }}
+                                                = {{ product.total_price }} грн.
+                                            </li>
+                                        {% endfor %}
+                                    </ol>
+                                </td>
+                             </tr>
+                           {% endfor %}
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+{% block js_stuff %}
+
+
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#orders_table').DataTable(
+                {
+                    "order": [[0, "asc"]],
+                    "pageLength": 10,
+                }
+            );
+        });
+    </script>
+{% endblock js_stuff %}
+
