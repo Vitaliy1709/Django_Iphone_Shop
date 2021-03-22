@@ -57,18 +57,18 @@ $(document).ready(function(){
         $(".basket-items").removeClass("hidden");
     };
 
-//    $(".basket-container").on("click", function(e){
-//        e.preventDefault();
-//        showingBasket();
-//    });
+   $(".basket-container").on("click", function(e){
+       e.preventDefault();
+       showingBasket();
+   });
 
     $(".basket-container").mouseover(function(){
         showingBasket();
     });
 
-//    $(".basket-container").mouseout(function(){
-//        showingBasket();
-//    });
+   $(".basket-container").mouseout(function(){
+       showingBasket();
+   });
 
     $(document).on('click', 'delete-items', function(e){
         e.preventDefault();
