@@ -116,7 +116,7 @@ post_save.connect(order_post_save, sender=Order)
 class ProductInOrder(models.Model):
     order = models.ForeignKey(Order, blank=True, null=True, default=None, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, blank=True, null=True, default=None, on_delete=models.CASCADE)
-    nmb = models.IntegerField(default=1)
+    nmb = models.PositiveIntegerField(default=1)
     price_per_item = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # price * nmb
     is_active = models.BooleanField(default=True)
@@ -158,7 +158,7 @@ class ProductInBasket(models.Model):
     session_key = models.CharField(max_length=255, blank=True, null=True, default=None)
     order = models.ForeignKey(Order, blank=True, null=True, default=None, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, blank=True, null=True, default=None, on_delete=models.CASCADE)
-    nmb = models.IntegerField(default=1)
+    nmb = models.PositiveIntegerField(default=1)
     price_per_item = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # price * nmb
     is_active = models.BooleanField(default=True)
